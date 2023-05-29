@@ -17,6 +17,7 @@ struct Vario451: Driver
     std::map<std::string, float> ret_val{};
 
     add_to_map(ret_val, "total_heating_kwh", this->total_heating_kwh(telegram));
+    add_to_map(ret_val, "total_heating_gj", this->total_heating_gj(telegram));
 
     if (ret_val.size() > 0) {
       return ret_val;
@@ -38,5 +39,15 @@ private:
     ret_val = usage * 277.777 ;
 
     return ret_val;
+  };
+
+  esphome::optional<float> total_heating_gj(std::vector<unsigned char> &telegram) {
+    esphome::optional<float> ret_val{};
+    float usage = 0;
+    size_t i = 11;
+
+    usage = ((((uint32_t)telegram[i+4] << 8) + (uint32_t)telegram[i+3]) / 1000.0) +
+            ((((uint32_t)telegram[i+8] << 8) + (uint32_t)telegram[i+7]) / 1000.0);
+    return usage;
   };
 };
