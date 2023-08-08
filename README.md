@@ -216,6 +216,7 @@ Supported sensors (sensor_type) for meters:
 - `unismart`
   - total_gas_m3
 - `vario451`
+  - total_heating_gj
   - total_heating_kwh
 
 
